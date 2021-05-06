@@ -167,7 +167,9 @@ public class Player : Character {
         if (collision.gameObject.tag == "Weapon") {
             itemOnFloor = collision.gameObject;
             Debug.Log("Inside Weapon OnTriggerEnter2D for player");
-        }        
+        } else if (collision.gameObject.tag == "Sign") {
+            Sign sign = collision.gameObject.GetComponent<Sign>();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {

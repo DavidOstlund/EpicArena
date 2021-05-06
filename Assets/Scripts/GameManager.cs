@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     private Pathfinding pathfinding;
     
     public VisionCone cone;
-    public Transform tileMap;
+    private GameObject tileMap;
+    private GameObject door;
 
     public int gridHeight = 31;
     public int gridWidth = 31;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     
     private int killCount;
     private Text killCountText;
+    private Text helpText;
 
     public GameObject thePlayer;
 
@@ -49,7 +51,8 @@ public class GameManager : MonoBehaviour
 
     void InitGame()
     {
-        Transform tilemap = GameObject.Find("EpicArenaMap").transform;
+        tileMap = GameObject.Find("EpicArenaMap");
+        door = GameObject.Find(("movableDoor"));
         cone = Instantiate(cone);
         pathfinding = new Pathfinding(gridHeight, gridWidth, cellSize);
 
@@ -59,12 +62,11 @@ public class GameManager : MonoBehaviour
 
 
         killCountText = GameObject.Find("KillCount").GetComponent<Text>();
-        print("killCountText");
-        print(killCountText);
         killCount = 0;
         killCountText.text = killCount.ToString();
 
         GameObject.Find("Instructions").GetComponent<Text>().text = ("Walk with WASD \nAttack with left moust button \nPick up items with F \nCycle weapons with Q and E");
+        helpText = GameObject.Find("HelpText").GetComponent<Text>();
 
     }
     
@@ -88,6 +90,24 @@ public class GameManager : MonoBehaviour
         print(killCount);
     }
 
+    public void changeHelpText(string newHelpText) {
+        helpText.enabled = true;
+        helpText.text = newHelpText;
+    }
+
+    public void hideHelpText() {
+        helpText.enabled = false;
+    }
+
+    public void switchDoor() {
+        if (door.activeSelf == true) {
+            print("hiding door");
+            door.SetActive(false);
+        } else {
+            print("showing door");
+            door.SetActive(true);
+        }
+    }
 
     public void GameOver() {
         SceneManager.LoadScene("GameOver");

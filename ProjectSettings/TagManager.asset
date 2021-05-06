@@ -9,6 +9,7 @@ TagManager:
   - Weapon
   - Bow
   - VisionCone
+  - Sign
   layers:
   - Default
   - TransparentFX

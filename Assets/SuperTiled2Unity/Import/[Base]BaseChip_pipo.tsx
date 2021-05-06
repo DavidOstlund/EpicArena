@@ -412,6 +412,26 @@
    <object id="1" x="0" y="0" width="32" height="32"/>
   </objectgroup>
  </tile>
+ <tile id="640">
+  <objectgroup draworder="index" id="2">
+   <object id="3" x="0" y="2" width="32" height="30"/>
+  </objectgroup>
+ </tile>
+ <tile id="641">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="2" width="32" height="30"/>
+  </objectgroup>
+ </tile>
+ <tile id="648">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="32" height="30"/>
+  </objectgroup>
+ </tile>
+ <tile id="649">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="32" height="30"/>
+  </objectgroup>
+ </tile>
  <tile id="695">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="32" height="32"/>
