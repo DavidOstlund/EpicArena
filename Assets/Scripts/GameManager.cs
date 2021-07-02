@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         killCount = 0;
         killCountText.text = killCount.ToString();
 
-        GameObject.Find("Instructions").GetComponent<Text>().text = ("Walk with WASD \nAttack with left moust button \nPick up items with F \nCycle weapons with Q and E");
+        GameObject.Find("Instructions").GetComponent<Text>().text = ("Walk with WASD \nAttack with left moust button \nPick up items with F \nCycle weapons with Q and E\nThe sign opens the door");
         helpText = GameObject.Find("HelpText").GetComponent<Text>();
 
     }

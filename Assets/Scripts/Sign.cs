@@ -17,12 +17,18 @@ public class Sign : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        GameManager.instance.changeHelpText("Press SPACE to open the door");
+        GameManager.instance.changeHelpText("Walk inside at your own risk.");
         GameManager.instance.switchDoor();
+        Invoke("HideText", 5.0f);
+    }
+
+    public void HideText()
+    {
+        GameManager.instance.hideHelpText();
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        GameManager.instance.hideHelpText();
+        //GameManager.instance.hideHelpText();
         
     }
 }
