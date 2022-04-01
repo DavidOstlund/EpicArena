@@ -23,6 +23,9 @@ public class Player : Character {
 
     private GameObject itemOnFloor;
 
+    private NPC npc;
+    private Interactable interactable = null;
+
     // UI elements
     [SerializeField] private HealthBar overworldHealthBar;
     [SerializeField] private AvailableWeapons availableWeapons;
@@ -162,21 +165,48 @@ public class Player : Character {
         }
     }
 
+    public void interacting()
+    {
+        if (interactable != null) {
+            interactable.Interact();
+        } else {
+            Debug.Log("Nothing to interact with");
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
+        string tag = collision.gameObject.tag;
+
+        if (tag == "Interactable") {
+            interactable = collision.GetComponent<Interactable>();
+        }
 
         if (collision.gameObject.tag == "Weapon") {
             itemOnFloor = collision.gameObject;
             Debug.Log("Inside Weapon OnTriggerEnter2D for player");
         } else if (collision.gameObject.tag == "Sign") {
             Sign sign = collision.gameObject.GetComponent<Sign>();
+        } else if (collision.gameObject.tag == "NPC") {
+            npc = collision.gameObject.GetComponent<NPC>();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
+        string tag = collision.gameObject.tag;
+
+        if (tag == "Interactable")
+        {
+            if (collision.GetComponent<Interactable>() == interactable)
+            {
+                interactable = null;
+            }
+        }
 
         if (collision.gameObject.tag == "Weapon") {
             itemOnFloor = null;
             Debug.Log("Exiting Weapon trigger for player");
+        } else if (collision.gameObject.tag == "NPC") {
+            npc = null;
         }
     }
 }

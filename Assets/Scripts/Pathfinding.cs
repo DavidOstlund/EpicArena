@@ -166,7 +166,7 @@ public class Pathfinding
         }
 
         // Out of nodes on the openList (Could not find a path)
-        Debug.Log("Failed to find path");
+        //Debug.Log("Failed to find path");
         if (changedEndNodeIsWalkable == true) {
             endNode.isWalkable = false;
             changedEndNodeIsWalkable = false;

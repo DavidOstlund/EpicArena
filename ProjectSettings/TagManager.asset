@@ -10,6 +10,8 @@ TagManager:
   - Bow
   - VisionCone
   - Sign
+  - NPC
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - UI front
   - 
   - 
   - 

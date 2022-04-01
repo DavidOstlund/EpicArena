@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2329352138892301177}
   - component: {fileID: 3246180594647619323}
-  m_Layer: 0
+  - component: {fileID: 1054582225}
+  - component: {fileID: 1871098956011731443}
+  m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2fe8403cb47461f8f9ec40121dd03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputHandler: {fileID: 0}
   cone: {fileID: 8662973997493973200, guid: 9252380eb0138d24dadc8c594ac52c67, type: 3}
-  tileMap: {fileID: -392479425281941634, guid: e716aea476dd83d42a5936823e737768, type: 3}
   gridHeight: 100
   gridWidth: 100
   cellSize: 1
@@ -59,6 +61,36 @@ MonoBehaviour:
     type: 3}
   gameCanvas: {fileID: 4135607907755975192, guid: f265376d8cff16c42a839baadd6aa30b,
     type: 3}
-  isDay: 0
-  isNight: 1
-  coneActivated: 0
+  thePlayer: {fileID: 0}
+--- !u!114 &1054582225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329352138892301158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553db14e0ee84f6459a905f6101da752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueInputHandler: {fileID: 0}
+  dialogueBox: {fileID: 0}
+  mainText: {fileID: 0}
+  option1: {fileID: 0}
+  option2: {fileID: 0}
+  option3: {fileID: 0}
+  option4: {fileID: 0}
+--- !u!114 &1871098956011731443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329352138892301158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c84ec5c6dcb69d40801ef6552183c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
