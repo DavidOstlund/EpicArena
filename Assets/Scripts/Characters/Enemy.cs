@@ -41,7 +41,7 @@ public class Enemy : Character
 
         timestampForNextAttack = Time.time;
 
-        target = GameManager.instance.thePlayer.transform;
+        target = BattleManager.instance.thePlayer.transform;
 
         // Set the initial path
         UpdatePath();
@@ -121,7 +121,7 @@ public class Enemy : Character
         healthBar.SetHealth(base.GetCurrentHealth());
 
         if (base.GetCurrentHealth() <= 0) {
-            GameManager.instance.HandleKilledEnemy(base.gameObject);
+            BattleManager.instance.HandleKilledEnemy(base.gameObject);
         }
     }
 

@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class DialogueInputHandler : MonoBehaviour
 {
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1)) {
+        /* if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1)) {
             DialogueManager.instance.nextLine(0);
         } 
         
@@ -27,6 +28,6 @@ public class DialogueInputHandler : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4)) {
             DialogueManager.instance.nextLine(3);
-        }
+        } */
     }
 }

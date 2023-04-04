@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    public PlayerInputHandler playerInputHandler;
+    private BattleManager battleManager;
 
     private Pathfinding pathfinding;
     private GameObject tileMap;
@@ -17,9 +17,6 @@ public class GameManager : MonoBehaviour
     public int gridWidth = 31;
     public int cellSize = 1;
 
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject otherPlayerPrefab;
     [SerializeField] private GameObject bow;
     [SerializeField] private GameObject crossbow;
     [SerializeField] private GameObject gameCanvas;
@@ -30,8 +27,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject thePlayer;
 
-    private List<GameObject> enemyList = new List<GameObject>();
-
+    private int currentLevel = 1;
 
     void Awake()
     {
@@ -52,16 +48,12 @@ public class GameManager : MonoBehaviour
     {
         tileMap = GameObject.Find("EpicArenaMap");
         door = GameObject.Find(("movableDoor"));
-        
-        pathfinding = new Pathfinding(gridHeight, gridWidth, cellSize);
-        
-        enemyList.Add(GameObject.Find("Enemy"));
-        thePlayer = GameObject.Find("Player");
-        playerInputHandler = thePlayer.GetComponent<PlayerInputHandler>();
 
-        killCountText = GameObject.Find("KillCount").GetComponent<Text>();
-        killCount = 0;
-        killCountText.text = killCount.ToString();
+        pathfinding = new Pathfinding(gridHeight, gridWidth, cellSize);
+
+        thePlayer = GameObject.Find("Player");
+        battleManager = this.GetComponent<BattleManager>();
+        battleManager.initBattleManager();
 
         GameObject.Find("Instructions").GetComponent<Text>().text = ("Walk with WASD \nAttack with left moust button \nPick up items with F \nCycle weapons with Q and E\nThe sign opens the door");
         helpText = GameObject.Find("HelpText").GetComponent<Text>();
@@ -70,24 +62,15 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {   
-        if (enemyList.Count == 0)
-            enemyList.Add(Instantiate(enemyPrefab, new Vector3(20, 20f), Quaternion.identity).gameObject);
     }
+    /*
 
     public void HandleKilledPlayer() {
         foreach (GameObject enemyGameObject in enemyList) {
             enemyGameObject.GetComponent<Enemy>().RemovePlayerFromTarget();
             }
     }
-
-    public void HandleKilledEnemy(GameObject enemy) {
-        enemyList.Remove(enemy);
-        Destroy(enemy);
-        killCount = killCount + 1;
-        killCountText.text = killCount.ToString();
-        print(killCount);
-    }
-
+    */
     public void changeHelpText(string newHelpText) {
         helpText.enabled = true;
         helpText.text = newHelpText;
@@ -107,9 +90,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartBattle(int level) {
+        battleManager.enabled = true;
+        battleManager.StartBattle(currentLevel);
+        currentLevel++;
+    }
+
     public void PlayerInputHandlerToggle(bool onOff)
     {
-        playerInputHandler.enabled = onOff;
+        //playerInputHandler.enabled = onOff;
     }
 
     public void GameOver() {

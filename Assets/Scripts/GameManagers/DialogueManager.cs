@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
 
     private Dialogue currentDialogue = null;
     private Line currentLine = null;
+    private NPC currentNPC = null;
 
     void Awake()
     {
@@ -33,22 +34,26 @@ public class DialogueManager : MonoBehaviour
         dialogueInputHandler.enabled = false;
     }
 
-    public void StartConversation(Dialogue dialogue)
+    public void StartConversation(Dialogue dialogue, NPC sendingNPC)
     {
+        currentNPC = sendingNPC;
+        currentDialogue = dialogue;
+
         GameManager.instance.PlayerInputHandlerToggle(false);
         dialogueInputHandler.enabled = true;
 
         dialogueBox.SetActive(true);
-        currentDialogue = dialogue;
         currentLine = currentDialogue.lineDict[0];
         fillDialogueBox();
     }
 
     public void nextLine(int chosenOption)
     {
-        int destination = currentLine.optionList[chosenOption].destination;
+        Option option = currentLine.optionList[chosenOption];
+        int destination = option.destination;
 
         if (destination == -1) {
+            currentNPC.RecieveDialogFlag(option.sendBackFlag);
             endConversation();
         } else {
             currentLine = currentDialogue.lineDict[destination];

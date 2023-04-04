@@ -6,6 +6,7 @@ public class NPC : Interactable
 {
     private Dialogue dialogue;
     [SerializeField] private GameObject exclamation;
+    [SerializeField] private TextAsset inkJSON;
 
     // Start is called before the first frame update
     void Start()
@@ -13,15 +14,19 @@ public class NPC : Interactable
         CreateTestDialogue();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void Interact(){
         Debug.Log("NPC interacted with");
-        DialogueManager.instance.StartConversation(dialogue);
+        if (!NewDialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            NewDialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+        }
+    }
+
+    public void RecieveDialogFlag(int flag)
+    {
+        if (flag != 0) {
+            GameManager.instance.StartBattle(1);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

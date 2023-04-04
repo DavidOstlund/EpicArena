@@ -10,7 +10,7 @@ public class Player : Character {
     private Animator animator;
 
     // Variables regarding movement
-    private float moveLimiter = 0.7f;
+    private float moveLimiter = 1.4f;
     [SerializeField] private float runSpeed;
     [SerializeField] private string playerName;
 
@@ -64,12 +64,20 @@ public class Player : Character {
     {
     }
 
-    public void Move(float horizontal, float vertical) {
+    public void Move(Vector2 moveDirection) {
+
+        if (NewDialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
+
+        float horizontal = moveDirection.x;
+        float vertical = moveDirection.y;
         // Check for diagonal movement
         if (horizontal != 0 && vertical != 0) {
             // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
+            horizontal /= moveLimiter;
+            vertical /= moveLimiter;
         }
 
         if (horizontal > 0) {
@@ -159,7 +167,7 @@ public class Player : Character {
         base.ReduceCurrentHealth(damage);
         overworldHealthBar.SetHealth(base.GetCurrentHealth());
         if (base.GetCurrentHealth() <= 0) {
-            GameManager.instance.HandleKilledPlayer();
+            //GameManager.instance.HandleKilledPlayer();
             GameManager.instance.GameOver();
             Destroy(gameObject);
         }
@@ -177,18 +185,15 @@ public class Player : Character {
     private void OnTriggerEnter2D(Collider2D collision) {
         string tag = collision.gameObject.tag;
 
-        if (tag == "Interactable") {
+        if (tag == "Interactable") 
+        {
             interactable = collision.GetComponent<Interactable>();
-        }
-
-        if (collision.gameObject.tag == "Weapon") {
+        } 
+        else if (tag == "Weapon") 
+        {
             itemOnFloor = collision.gameObject;
             Debug.Log("Inside Weapon OnTriggerEnter2D for player");
-        } else if (collision.gameObject.tag == "Sign") {
-            Sign sign = collision.gameObject.GetComponent<Sign>();
-        } else if (collision.gameObject.tag == "NPC") {
-            npc = collision.gameObject.GetComponent<NPC>();
-        }
+        } 
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
@@ -201,12 +206,10 @@ public class Player : Character {
                 interactable = null;
             }
         }
-
-        if (collision.gameObject.tag == "Weapon") {
+        else if (tag == "Weapon") 
+        {
             itemOnFloor = null;
             Debug.Log("Exiting Weapon trigger for player");
-        } else if (collision.gameObject.tag == "NPC") {
-            npc = null;
         }
     }
 }
