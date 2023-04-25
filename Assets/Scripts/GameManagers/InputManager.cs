@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 // This script acts as a single point for all other scripts to get
 // the current input from. It uses Unity's new Input System and
@@ -9,28 +10,31 @@ using UnityEngine.InputSystem;
 // using a PlayerInput component with Unity Events.
 
 [RequireComponent(typeof(PlayerInput))]
-public class PlayerInput : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     private Vector2 moveDirection = Vector2.zero;
     private bool interactPressed = false;
     private bool submitPressed = false;
     private bool attackPressed = false;
     [SerializeField] private Player player;
+    [SerializeField] private GameObject inventory;
 
-    private static PlayerInput instance;
+    [SerializeField] private PlayerInput playerInput;
+
+    public static InputManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Debug.LogError("Found more than one Input Manager in the scene.");
         }
-        instance = this;
+        Instance = this;
     }
 
-    public static PlayerInput GetInstance() 
+    public static InputManager GetInstance() 
     {
-        return instance;
+        return Instance;
     }
 
     public void MovePressed(InputAction.CallbackContext context)
@@ -86,6 +90,29 @@ public class PlayerInput : MonoBehaviour
         {
             attackPressed = false;
         } 
+    }
+
+    public void InventoryButtonPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            InventoryManager.Instance.OpenInventory();
+        }
+        else if (context.canceled)
+        {
+        } 
+    }
+
+    public void SwitchToActionMap(string actionMapName)
+    {
+        playerInput.SwitchCurrentActionMap(actionMapName);
+    }    
+
+    public IEnumerator SelectButton(GameObject button)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        EventSystem.current.SetSelectedGameObject(button.gameObject); 
     }
 
     // for any of the below 'Get' methods, if we're getting it then we're also using it,

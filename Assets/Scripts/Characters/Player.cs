@@ -50,7 +50,7 @@ public class Player : Character {
         }
 
         overworldHealthBar = GameObject.Find("OverworldHealthBar").GetComponent<HealthBar>();
-        availableWeapons = GameObject.Find("AvailableWeapons").GetComponent<AvailableWeapons>();
+        //availableWeapons = GameObject.Find("AvailableWeapons").GetComponent<AvailableWeapons>();
         overworldHealthBar.SetMaxHealth(base.GetMaxHealth());
 
         //Setting "StartingWeapon" as first weapon
@@ -66,7 +66,7 @@ public class Player : Character {
 
     public void Move(Vector2 moveDirection) {
 
-        if (NewDialogueManager.GetInstance().dialogueIsPlaying)
+        if (DialogueManager.Instance.dialogueIsPlaying)
         {
             return;
         }

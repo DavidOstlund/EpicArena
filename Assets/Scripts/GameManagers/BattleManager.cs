@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    public static BattleManager instance = null;
+    public static BattleManager Instance { get; private set; }
     public GameObject thePlayer;
     [SerializeField] private GameObject enemyPrefab;
     private int killCount;
@@ -15,9 +15,9 @@ public class BattleManager : MonoBehaviour
 
     public void initBattleManager()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this) {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this) {
             Destroy(gameObject);
             return;
         }

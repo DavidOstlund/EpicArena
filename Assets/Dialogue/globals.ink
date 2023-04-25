@@ -1,0 +1,1 @@
+VAR global_variable = false

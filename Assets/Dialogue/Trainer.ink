@@ -1,14 +1,24 @@
+INCLUDE globals.ink
+
+VAR send_to_arena = false
+
 -> main
 
 === main ===
-Which pokemon do you choose?
-    + [Charmander]
-        -> chosen("Charmander")
-    + [Bulbasaur]
-        ->chosen("Bulbasaur")
-    + [Squirtle]
-        -> chosen("Squirtle")
+What do you want to do?
+    + [Go to the Arena]
+        ~ send_to_arena = true
+        -> arenaDialogue
+    + [Go the the Shop]
+        Sorry, this is not implemented yet
+        ->endOfDialogue
+    + [Nothing]
+        ->endOfDialogue
 
-=== chosen(pokemon) ===
-You chose {pokemon}!
+=== endOfDialogue ===
+Bye
+-> END
+
+=== arenaDialogue ===
+Good luck!
 -> END
