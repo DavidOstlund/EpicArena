@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Crossbow : Weapon
 {
-    [SerializeField] private Transform projectile;
     public Crossbow() {
         this.weaponName = "crossbow";
         this.weaponIndex = 2;
@@ -15,7 +14,7 @@ public class Crossbow : Weapon
 
     public override void MakeAttack(Vector2 clickPosition, Vector2 spawnPosition) {
         Vector2 attackDirection = (clickPosition - (Vector2)spawnPosition).normalized;
-        Transform projectileTransform = Instantiate(projectile, spawnPosition, Quaternion.identity);
+        Transform projectileTransform = WeaponManager.Instance.InstantiateProjectile(spawnPosition);
         projectileTransform.GetComponent<Projectile>().Setup(attackDirection, weaponDamage);
     }
 }

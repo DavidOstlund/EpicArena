@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartingWeapon : Weapon
+public class Dagger : Weapon
 {
     public float attackRangeX = 0.8f;
     public float attackRangeY = 1.5f;
     public float weaponDistanceFromPlayer = 1;
     public float offsetInYDirection = 0.2f;
-    public StartingWeapon() {
-        this.weaponName = "startingWeapon";
+    public Dagger() {
+        this.weaponName = "Dagger";
         this.weaponIndex = 0;
         this.weaponDamage = 1f;
-        this.reloadSpeed = 1f;
+        this.reloadSpeed = 0.5f;
         this.isRanged = false;
     }
 

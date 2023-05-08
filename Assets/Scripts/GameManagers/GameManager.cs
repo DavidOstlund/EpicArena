@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance = null;
+    public static GameManager Instance = null;
     private BattleManager battleManager;
 
     private Pathfinding pathfinding;
@@ -16,24 +16,21 @@ public class GameManager : MonoBehaviour
     public int gridHeight = 31;
     public int gridWidth = 31;
     public int cellSize = 1;
-
-    [SerializeField] private GameObject bow;
-    [SerializeField] private GameObject crossbow;
     [SerializeField] private GameObject gameCanvas;
     
     private int killCount;
     private Text killCountText;
     private Text helpText;
 
-    public GameObject thePlayer;
+    public Player thePlayer;
 
     private int currentLevel = 1;
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this) {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this) {
             Destroy(gameObject);
             return;
         }
@@ -51,7 +48,6 @@ public class GameManager : MonoBehaviour
 
         pathfinding = new Pathfinding(gridHeight, gridWidth, cellSize);
 
-        thePlayer = GameObject.Find("Player");
         battleManager = this.GetComponent<BattleManager>();
         battleManager.initBattleManager();
 
@@ -104,5 +100,4 @@ public class GameManager : MonoBehaviour
     public void GameOver() {
         SceneManager.LoadScene("GameOver");
     }
-    
 }

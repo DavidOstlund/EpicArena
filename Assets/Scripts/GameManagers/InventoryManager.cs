@@ -23,8 +23,10 @@ public class InventoryManager : MonoBehaviour
         InputManager.Instance.SwitchToActionMap("Dialogue");
     }
 
-    public void CloseInventory(int chosenWeapon)
+    public void CloseInventory(string weaponKey)
     {
+        WeaponManager.Instance.ChooseWeapon(weaponKey);
+
         inventory.gameObject.SetActive(false);
         InputManager.Instance.SwitchToActionMap("Player");
     }

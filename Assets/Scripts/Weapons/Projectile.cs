@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public float moveSpeed = 20;
     private float projectileDamage;
+    private bool targetAlreadyFound = false;
     public void Setup(Vector3 shootDirection, float weapondamage ) {
         projectileDamage = weapondamage;
         Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
@@ -29,11 +30,16 @@ public class Projectile : MonoBehaviour
                 return;
             }
             // Hit an Character
-            hitCharacter.TakeDamage(projectileDamage);
-            Destroy(gameObject);
+            if (!targetAlreadyFound)
+            {
+                hitCharacter.TakeDamage(projectileDamage);
+                Destroy(gameObject);
+                targetAlreadyFound = true;
+            }
         } else if (collider.name == "Collision_Default"){
             // Hit a wall
             Debug.Log("Hit the wall");
+            targetAlreadyFound = true;
             Destroy(gameObject);
         }
 

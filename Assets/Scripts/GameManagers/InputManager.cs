@@ -83,7 +83,7 @@ public class InputManager : MonoBehaviour
     {
         if (context.performed)
         {
-            player.TryToAttack(Mouse.current.position.ReadValue());
+            player.TryToAttack(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
             attackPressed = true;
         }
         else if (context.canceled)

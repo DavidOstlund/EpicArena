@@ -18,13 +18,13 @@ public class Sign : Interactable
 
     public override void Interact()
     {
-        GameManager.instance.changeHelpText("Walk inside at your own risk.");
-        GameManager.instance.switchDoor();
+        GameManager.Instance.changeHelpText("Walk inside at your own risk.");
+        GameManager.Instance.switchDoor();
         Invoke("HideText", 5.0f);
     }
 
     public void HideText()
     {
-        GameManager.instance.hideHelpText();
+        GameManager.Instance.hideHelpText();
     }
 }

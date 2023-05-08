@@ -14,10 +14,7 @@ public class Player : Character {
     [SerializeField] private float runSpeed;
     [SerializeField] private string playerName;
 
-    // Variables regarding weapons and items
-    [SerializeField] private List<GameObject> weaponsList;
-    private List<bool> weaponsBoolList;
-    private Weapon equippedWeapon = null;
+    public Weapon equippedWeapon = null;
 
     private float timestampForNextAction;
 
@@ -28,7 +25,6 @@ public class Player : Character {
 
     // UI elements
     [SerializeField] private HealthBar overworldHealthBar;
-    [SerializeField] private AvailableWeapons availableWeapons;
     [SerializeField] private Text nameTextBox;
 
     // Start is called before the first frame update
@@ -41,20 +37,12 @@ public class Player : Character {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
 
-        weaponsBoolList = new List<bool>();
-        // Setting true for "startingWeapon" position
-        weaponsBoolList.Add(true);
-        // Setting false for all other weapon positions
-        for (int i = 1; i < weaponsList.Count; i++) {
-            weaponsBoolList.Add(false);
-        }
-
         overworldHealthBar = GameObject.Find("OverworldHealthBar").GetComponent<HealthBar>();
         //availableWeapons = GameObject.Find("AvailableWeapons").GetComponent<AvailableWeapons>();
         overworldHealthBar.SetMaxHealth(base.GetMaxHealth());
 
         //Setting "StartingWeapon" as first weapon
-        SwitchWeapon(0);
+        WeaponManager.Instance.ChooseWeapon("Dagger");
 
         Debug.Log("Player max currenthealth:" + base.GetCurrentHealth());
     }
@@ -100,55 +88,7 @@ public class Player : Character {
         body.velocity = new Vector2(0, 0);
     }
 
-    public void GrabObject() {
-        if (itemOnFloor == null) {
-            Debug.Log("Trying to grab an item when noone exist");
-            return;
-        }
-        if (itemOnFloor.tag == "Weapon") {
-            Weapon weaponOnFloor = itemOnFloor.GetComponent<Weapon>();
-
-            if (weaponsBoolList[weaponOnFloor.weaponIndex] == false) {
-                weaponsBoolList[weaponOnFloor.weaponIndex] = true;
-                SwitchWeapon(weaponOnFloor.weaponIndex);
-                availableWeapons.SetActive(weaponOnFloor.weaponIndex);
-                Destroy(itemOnFloor);
-                itemOnFloor = null;
-            } else {
-                // Already had the weapon which we tried to pick up.
-            }
-        }
-    }
-
-    public void CycleEquippedWeapon(int cycleDirection) {
-        int newWeaponIndex = equippedWeapon.weaponIndex + cycleDirection;
-
-        if (newWeaponIndex < 0) {
-            newWeaponIndex += weaponsList.Count;
-        } else if (newWeaponIndex == weaponsList.Count) {
-            newWeaponIndex = 0;
-        }
-
-        if (weaponsBoolList[newWeaponIndex] == false) {
-            if (cycleDirection < 0) {
-                CycleEquippedWeapon(cycleDirection - 1);
-            } else {
-                CycleEquippedWeapon(cycleDirection + 1);
-            }
-        } else {
-            SwitchWeapon(newWeaponIndex);
-        }
-    }
-
-    private void SwitchWeapon(int weaponIndex) {
-        equippedWeapon = weaponsList[weaponIndex].GetComponent<Weapon>();
-        availableWeapons.ChooseWeapon(weaponIndex);
-        if (equippedWeapon.isRanged == true) {
-            animator.SetBool("isRanged", true);
-        } else {
-            animator.SetBool("isRanged", false);
-        }
-    }
+    
 
     public void TryToAttack(Vector2 targetPosition) {
         if (Time.time >= timestampForNextAction) {
@@ -168,7 +108,7 @@ public class Player : Character {
         overworldHealthBar.SetHealth(base.GetCurrentHealth());
         if (base.GetCurrentHealth() <= 0) {
             //GameManager.instance.HandleKilledPlayer();
-            GameManager.instance.GameOver();
+            GameManager.Instance.GameOver();
             Destroy(gameObject);
         }
     }
@@ -212,4 +152,54 @@ public class Player : Character {
             Debug.Log("Exiting Weapon trigger for player");
         }
     }
+
+    // public void GrabObject() {
+    //     if (itemOnFloor == null) {
+    //         Debug.Log("Trying to grab an item when noone exist");
+    //         return;
+    //     }
+    //     if (itemOnFloor.tag == "Weapon") {
+    //         Weapon weaponOnFloor = itemOnFloor.GetComponent<Weapon>();
+
+    //         if (weaponsBoolList[weaponOnFloor.weaponIndex] == false) {
+    //             weaponsBoolList[weaponOnFloor.weaponIndex] = true;
+    //             SwitchWeapon(weaponOnFloor.weaponIndex);
+    //             availableWeapons.SetActive(weaponOnFloor.weaponIndex);
+    //             Destroy(itemOnFloor);
+    //             itemOnFloor = null;
+    //         } else {
+    //             // Already had the weapon which we tried to pick up.
+    //         }
+    //     }
+    // }
+
+    // public void CycleEquippedWeapon(int cycleDirection) {
+    //     int newWeaponIndex = equippedWeapon.weaponIndex + cycleDirection;
+
+    //     if (newWeaponIndex < 0) {
+    //         newWeaponIndex += weaponsList.Count;
+    //     } else if (newWeaponIndex == weaponsList.Count) {
+    //         newWeaponIndex = 0;
+    //     }
+
+    //     if (weaponsBoolList[newWeaponIndex] == false) {
+    //         if (cycleDirection < 0) {
+    //             CycleEquippedWeapon(cycleDirection - 1);
+    //         } else {
+    //             CycleEquippedWeapon(cycleDirection + 1);
+    //         }
+    //     } else {
+    //         SwitchWeapon(newWeaponIndex);
+    //     }
+    // }
+
+    // private void SwitchWeapon(int weaponIndex) {
+    //     equippedWeapon = weaponsList[weaponIndex].GetComponent<Weapon>();
+    //     availableWeapons.ChooseWeapon(weaponIndex);
+    //     if (equippedWeapon.isRanged == true) {
+    //         animator.SetBool("isRanged", true);
+    //     } else {
+    //         animator.SetBool("isRanged", false);
+    //     }
+    // }
 }

@@ -39,7 +39,7 @@ public class NPC : Interactable
         if ((bool) currentStory.variablesState["send_to_arena"])
         {
             currentStory.variablesState["send_to_arena"] = false;
-            GameManager.instance.StartBattle(1);
+            GameManager.Instance.StartBattle(1);
         }
 
     }
